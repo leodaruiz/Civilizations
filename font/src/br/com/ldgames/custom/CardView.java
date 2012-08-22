@@ -1,7 +1,10 @@
 package br.com.ldgames.custom;
 
 import br.com.ldgames.R;
+import br.com.ldgames.entities.Card;
 import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -9,29 +12,36 @@ import android.widget.TextView;
 
 public class CardView {
 
-	private LinearLayout carta;
+	private Card carta;
+	private LinearLayout cartaLayout;
+	private float fontRatio = 0.8f;
+	private float bgRatio = 0.8f;
 
 	public void moveTo(int x, int y) {
-		carta.setPadding(carta.getLeft() + x, carta.getTop() + y, 0, 0);
+		cartaLayout.setPadding(cartaLayout.getLeft() + x, cartaLayout.getTop()
+				+ y, 0, 0);
 	}
 
-	public CardView(Context context, ViewGroup mesa) {
+	public CardView(Context context, ViewGroup mesa, Card carta) {
 		// setOnTouchListener(this);
+		this.carta = carta;
 
-		carta = new LinearLayout(context);
-		carta.setLayoutParams(new LayoutParams(300, 200));
-		carta.setOrientation(LinearLayout.VERTICAL);
-		carta.setBackgroundResource(R.drawable.border);
+		cartaLayout = new LinearLayout(context);
+		cartaLayout.setLayoutParams(new LayoutParams((int) (150 * bgRatio),
+				(int) (100 * bgRatio)));
+		cartaLayout.setOrientation(LinearLayout.VERTICAL);
+		//cartaLayout.setBackgroundResource(R.drawable.border);
+		cartaLayout.setBackgroundColor(Color.LTGRAY);
 
 		LinearLayout fundoSuperior = preparaFundoSuperior(context);
 
 		LinearLayout fundoInferior = preparaFundoInferior(context);
 
-		carta.addView(fundoSuperior);
+		cartaLayout.addView(fundoSuperior);
 		// carta.addView(imagem);
-		carta.addView(fundoInferior);
+		cartaLayout.addView(fundoInferior);
 
-		mesa.addView(carta, 0);
+		mesa.addView(cartaLayout, 0);
 
 	}
 
@@ -39,14 +49,17 @@ public class CardView {
 		LinearLayout fundoInferior = new LinearLayout(context);
 		fundoInferior.setLayoutParams(new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		fundoInferior.setOrientation(LinearLayout.VERTICAL);
+		fundoInferior.setOrientation(LinearLayout.HORIZONTAL);
 
 		TextView ataque = new TextView(context);
 		ataque.setText("2");
+		ataque.setTextSize(9 * fontRatio);
+		ataque.setGravity(android.R.attr.right);
 		fundoInferior.addView(ataque);
 
 		TextView defesa = new TextView(context);
-		defesa.setText("1");
+		defesa.setText("/1");
+		defesa.setTextSize(9 * fontRatio);
 		fundoInferior.addView(defesa);
 		return fundoInferior;
 	}
@@ -55,20 +68,23 @@ public class CardView {
 		LinearLayout fundoSuperior = new LinearLayout(context);
 		fundoSuperior.setLayoutParams(new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		fundoSuperior.setOrientation(LinearLayout.VERTICAL);
-		fundoSuperior.setBackgroundColor(0);
-
+		fundoSuperior.setOrientation(LinearLayout.HORIZONTAL);
+		fundoSuperior.setBackgroundColor(Color.BLACK);
+		
 		TextView titulo = new TextView(context);
-		titulo.setText("Nome da carta");
+		titulo.setText(carta.getName());
+		titulo.setTextSize(10 * fontRatio);
 		titulo.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		fundoSuperior.addView(titulo);
 
 		TextView custo = new TextView(context);
 		custo.setText("10");
+		custo.setTextSize(9 * fontRatio);
 		custo.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		fundoSuperior.addView(custo);
+		
 		return fundoSuperior;
 	}
 }

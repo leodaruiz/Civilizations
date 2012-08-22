@@ -6,6 +6,8 @@ public class Card {
 	private CardType type;
 	private String image;
 	private String description;
+	private int attack;
+	private int defense;
 
 	public String getName() {
 		return name;
@@ -37,6 +39,22 @@ public class Card {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
+	public int getDefense() {
+		return defense;
 	}
 
 }
